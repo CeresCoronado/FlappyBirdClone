@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BirbScript : MonoBehaviour
@@ -8,10 +7,11 @@ public class BirbScript : MonoBehaviour
     public Rigidbody2D myRigidbody2D;
     public float flapStrength = 10;
     public float initialBirdRotationAngle;
-    public float returnBirdRotationAngle;  
+    public float returnBirdRotationAngle;
     public float birdRotationSmoothness;
-    public bool didBirdFlap;
-    public bool didBirdRotate;
+    public float BirdAOADelaySeconds;
+    bool didBirdFlap;
+    bool didBirdRotate;
     float birdRotationVelocity;
     public void IncreaseBirdAOA()
     {
@@ -27,6 +27,11 @@ public class BirbScript : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0, 0, returnAngle);
     }
+    public void BirdLift()
+    {
+        myRigidbody2D.velocity = Vector2.up * flapStrength;
+        didBirdFlap = true;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -40,18 +45,24 @@ public class BirbScript : MonoBehaviour
         // bird flies upward after pressing 'spacebar'      
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            myRigidbody2D.velocity = Vector2.up * flapStrength;
-            didBirdFlap = true;
+            BirdLift();
         }
     }
     private void FixedUpdate()
     {
-        if(didBirdFlap == true)
+        if (didBirdFlap == true)
         {
-            // this method is under construction. after testing functionality here, this will be initialized every time the bird flaps.
+          
             IncreaseBirdAOA();
-                     
+            StartCoroutine(BirbReturnAngleDelay());
+            didBirdFlap = false;
+
         }
     }
-    
+    IEnumerator BirbReturnAngleDelay()
+    {
+        yield return new WaitUntil(didBirdRotate);
+        DecreaseBirdAOA();
+    }
+
 }
