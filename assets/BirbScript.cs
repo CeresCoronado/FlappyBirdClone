@@ -1,41 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BirbScript : MonoBehaviour
 {
     // Rigidbody2D is a physics object attached to the Bird that carries out this script
-    public Rigidbody2D myRigidbody2D;
-    
+    public Rigidbody2D myRigidbody;
+
     // Variables that can be changed within Unity that effects BirbLift()
-    public float flapStrength = 10;
-    
-    // Variables that can be changed within Unity that effects BirbTiltUp() and BirbTiltDown()
-    public float initialBirdRotationAngle = 1;
-    public float returnBirdRotationAngle = 1;
-       
+    private float flapStrength = 10;
+
+    // Variables that can be changed within Unity that effects BribTiltUp()
+    private float rotationSpeed = 5;
+
+    private bool willLift = false;
+        
     // BirbLift() Makes the birb go up
-    public void BirbLift()
+    private void BirbFlap()
     {
-        myRigidbody2D.velocity = Vector2.up * flapStrength;
+        myRigidbody.velocity = Vector2.up * flapStrength;
     }
     // BirbTiltUp() Makes the birb tilt its beak facing up
-    public void BirbTiltUp()
+    private void BirbTiltUp()
     {
-        float birdRotationVelocityUp = 10;
-        float birdRotationSmoothness = 0;
-        float angle = Mathf.SmoothDampAngle(transform.eulerAngles.z, initialBirdRotationAngle, ref birdRotationVelocityUp, birdRotationSmoothness);
-
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        transform.Rotate(Vector3.forward, rotationSpeed);
     }
     // BirbTiltDown() Makes the birb til its beak facing down
-    public void BirbTiltDown()
+    private void BirbTiltDown()
     {
-        float birdRotationVelocityDown = 10;
-        float birdRotationSmoothness = 0;
-        float returnAngle = Mathf.SmoothDampAngle(transform.eulerAngles.z, returnBirdRotationAngle, ref birdRotationVelocityDown, birdRotationSmoothness);
-
-        transform.rotation = Quaternion.Euler(0, 0, returnAngle);
+    
     }
     
     // Start is called before the first frame update
@@ -46,23 +40,20 @@ public class BirbScript : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-              
+    { 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            BirbLift();
+            willLift = true;
+
         }
-         
     }
     private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (willLift)
         {
-            BirbTiltUp();
-        }
-        else
-        {
-            BirbTiltUp();
+            BirbFlap();
+            willLift=false;
+
         }
     }
 }
