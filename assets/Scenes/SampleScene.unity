@@ -293,7 +293,11 @@ Transform:
   m_GameObject: {fileID: 533432590}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: 0, y: 0, z: 0.32}
+=======
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+>>>>>>> physics
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -350,7 +354,11 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
+<<<<<<< HEAD
   m_Offset: {x: -0.09, y: -0.45}
+=======
+  m_Offset: {x: -0.1, y: -0.5}
+>>>>>>> physics
   serializedVersion: 2
   m_Radius: 2.07
 --- !u!50 &1118184389
@@ -392,12 +400,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4223d8c25660d5143a630b5387e6fd3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   myRigidbody2D: {fileID: 1118184389}
   flapStrength: 1
   initialBirdRotationAngle: 20
   returnBirdRotationAngle: -20
   birdRotationSmoothness: 0.1
   isBirdRotated: 0
+=======
+  myRigidbody: {fileID: 1118184389}
+  wasSpaceBarTriggered: 1
+  wasSpaceBarHeld: 0
+  flapStrength: 10
+  rotationSpeed: 5
+>>>>>>> physics
 --- !u!4 &1118184391
 Transform:
   m_ObjectHideFlags: 0
